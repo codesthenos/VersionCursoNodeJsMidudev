@@ -8,5 +8,4 @@ fs.readdir('.')
   })
   .catch(err => {
     console.error('Error al leer el archivo ', err)
-    return
   })

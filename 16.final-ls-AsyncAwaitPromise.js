@@ -12,8 +12,8 @@ async function ls (folder) {
     console.error(`No se pudo leer el directorio ${folder}`)
     process.exit(1)
   }
-  
-files.map(async file => {
+
+  files.map(async file => {
     const filePath = path.join(folder, file)
     let stats
     try {
@@ -23,7 +23,7 @@ files.map(async file => {
       console.error(`No se pudo leer el archivo ${file}`)
       process.exit(1)
     }
-})
+  })
 }
 
 ls(folder)

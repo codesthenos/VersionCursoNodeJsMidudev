@@ -16,11 +16,11 @@ const fs = require('node:fs/promises')
 
     console.log('Texto del archivo2.txt', secondText)
   } catch (err) {
-      console.error('Error leyendo archivo:', err);
+    console.error('Error leyendo archivo:', err)
   }
-})();
+})()
 
-async function readFiles() {
+async function readFiles () {
   try {
     console.log('Leyendo el primer archivo...')
 
@@ -36,7 +36,7 @@ async function readFiles() {
 
     console.log('Texto del archivo2.txt', secondText)
   } catch (err) {
-    console.error('Error leyendo archivo:', err);
+    console.error('Error leyendo archivo:', err)
   }
 }
 
