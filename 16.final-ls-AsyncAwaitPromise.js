@@ -19,7 +19,7 @@ async function ls (folder) {
     try {
       stats = await fs.stat(filePath)
       if (stats.isDirectory()) console.log(`${file} es una carpeta`)
-      else if (stats.isFile()) console.log(`El archivo ${file} tiene un tamaño de ${stats.size / 1024}Kb`)
+      else if (stats.isFile()) console.log(`El archivo ${file} tiene un tamaño de ${stats.size / 1024}Kb\nCreado el dia: ${stats.birthtime}\nModificado por ultima vez el dia: ${stats.mtime}`)
     } catch {
       console.error(`No se pudo leer el archivo ${file}`)
       process.exit(1)
