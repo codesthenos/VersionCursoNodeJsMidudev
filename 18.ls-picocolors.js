@@ -1,5 +1,6 @@
 const fs = require('node:fs/promises')
 const path = require('node:path')
+const pcolor = require('picocolors')
 
 const folder = process.argv[2] ?? '.'
 
@@ -8,7 +9,7 @@ async function ls (folder) {
   try {
     files = await fs.readdir(folder)
   } catch {
-    console.error(`No se pudo leer el directorio ${folder}`)
+    console.error(pcolor.red(`No se pudo leer el directorio ${folder}`))
     process.exit(1)
   }
   
@@ -18,7 +19,7 @@ async function ls (folder) {
       try {
         stats = await fs.stat(filePath)
       } catch {
-        console.error(`No se pudo leer el archivo ${file}`)
+        console.error(pcolor.red(`No se pudo leer el archivo ${file}`))
         process.exit(1)
       }
 
@@ -27,7 +28,7 @@ async function ls (folder) {
       const fileSize = stats.size.toString()
       const fileDateModified = stats.mtime.toLocaleString()
 
-      return `${fileType} ${file.padEnd(40)} ${fileSize.padStart(10)} ${fileDateModified}`
+      return `${fileType} ${pcolor.blue(file.padEnd(40))} ${pcolor.green(fileSize.padStart(10))} ${pcolor.yellow(fileDateModified)}`
     })
   const filesInfo = await Promise.all(filesPromises)
 
