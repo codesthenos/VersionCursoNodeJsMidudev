@@ -1,0 +1,17 @@
+{
+  "name": "curso-node-midudev",
+  "version": "1.0.0",
+  "description": "Curso Node.js Midudev",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "curso",
+    "node",
+    "Midudev",
+    "nodejs"
+  ],
+  "author": "Guillermo Ruiz Arranz - codesthenos",
+  "license": "ISC"
+}
