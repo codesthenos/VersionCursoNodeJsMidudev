@@ -11,3 +11,39 @@ Content-Type: application/json; charset=utf-8
     "smoke"
   ]
 }
+###Necesario para separar request
+POST http://localhost:3210/pokemon/ataraxia
+Content-Type: application/json; charset=utf-8
+
+{
+  "name": "ataraxia",
+  "type": "DIOSA",
+  "belleza": "OUT OF RANGE",
+  "inteligencia": "DEMASIADA",
+  "caracteristica-especial": "HA ROBADO EL CORAZON DE codesthenos",
+  "moves": [
+    "AMAR",
+    "COCINAR",
+    "DISEÑAR",
+    "COSER",
+    "ENTRENAR"
+  ]
+}
+###Necesario para separar request
+POST http://localhost:3210/pokemon/ataraxia&codesthenos
+Content-Type: application/json; charset=utf-8
+
+{
+  "name": "PARA SIEMPRE",
+  "type": "UNIDAD DE AMOR",
+  "belleza": "NO SE PUEDEN MIRAR AL ESPEJO A LA VEZ",
+  "inteligencia": "TIENEN QUE CUIDAR EL EGO CUANDO HABLAN PORQUE SON DEMASIADO INTELIGENTES PARA ESTE MUNDO",
+  "caracteristica-especial": "HACERSE FELIZ EN TODO MOMENTO",
+  "moves": [
+    "AMAR",
+    "AMAR",
+    "AMAR",
+    "AMAR",
+    "AMAR"
+  ]
+}
