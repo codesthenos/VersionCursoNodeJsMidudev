@@ -1,0 +1,21 @@
+{
+  "name": "curso-node-midudev",
+  "version": "1.0.0",
+  "description": "dev dependencies and linterconfig",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "standard",
+    "linter"
+  ],
+  "author": "Guillermo Ruiz Arranz - codesthenos",
+  "license": "ISC",
+  "devDependencies": {
+    "standard": "^17.1.0"
+  },
+  "eslintConfig": {
+    "extends": "standard"
+  }
+}

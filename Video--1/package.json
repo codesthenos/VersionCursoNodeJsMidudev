@@ -1,26 +1,19 @@
 {
-  "name": "curso-node-midudev",
+  "name": "video--1",
   "version": "1.0.0",
-  "description": "Curso de Node.js de Midudev",
-  "main": "index.js",
+  "description": "video1 curso node ",
+  "main": "1.os-info.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [
-    "curso",
-    "node",
-    "Midudev",
-    "nodejs"
+    "video1",
+    "nodejs",
+    "midudev"
   ],
   "author": "Guillermo Ruiz Arranz - codesthenos",
   "license": "ISC",
   "dependencies": {
-    "picocolors": "1.0.1"
-  },
-  "devDependencies": {
-    "standard": "17.1.0"
-  },
-  "eslintConfig": {
-    "extends": "standard"
+    "picocolors": "^1.0.1"
   }
 }
