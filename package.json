@@ -1,7 +1,7 @@
 {
   "name": "curso-node-midudev",
   "version": "1.0.0",
-  "description": "Curso de Node.js de Midudev",
+  "description": "linter config for all subdirectories",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
@@ -9,16 +9,13 @@
   "keywords": [
     "curso",
     "node",
-    "Midudev",
-    "nodejs"
+    "linter",
+    "standard"
   ],
   "author": "Guillermo Ruiz Arranz - codesthenos",
   "license": "ISC",
-  "dependencies": {
-    "picocolors": "1.0.1"
-  },
   "devDependencies": {
-    "standard": "17.1.0"
+    "standard": "^17.1.0"
   },
   "eslintConfig": {
     "extends": "standard"

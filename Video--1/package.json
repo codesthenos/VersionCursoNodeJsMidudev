@@ -1,0 +1,18 @@
+{
+  "name": "video--1",
+  "version": "1.0.0",
+  "description": "video1 picocolors",
+  "main": "1.os-info.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "video1",
+    "picocolors"
+  ],
+  "author": "Guillermo Ruiz Arranz - codesthenos",
+  "license": "ISC",
+  "dependencies": {
+    "picocolors": "1.0.1"
+  }
+}
