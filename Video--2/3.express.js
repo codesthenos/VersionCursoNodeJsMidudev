@@ -27,6 +27,10 @@ app.post('/pokemon/codesthenos', (req, res) => {
   })
 })
 
+app.use((req, res) => {
+  res.status(404).send('<h1 style="width:100vw;heigth:100vh;line-height:100vh;text-align:center;">404</h1>')
+})
+
 app.listen(PORT, () => {
   console.log(`Server listening on http://localhost:${PORT}`)
 })
