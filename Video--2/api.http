@@ -1,7 +1,7 @@
 ###requests
-GET http://localhost:3000/pokemon/tyranitar
+GET http://localhost:3210/pokemon/tyranitar
 ###Necesario para separar request
-POST http://localhost:3000/pokemon/codesthenos
+POST http://localhost:3210/pokemon/codesthenos
 Content-Type: application/json; charset=utf-8
 
 {

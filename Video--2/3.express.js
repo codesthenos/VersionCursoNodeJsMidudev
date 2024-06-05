@@ -13,6 +13,19 @@ app.get('/pokemon/tyranitar', (req, res) => {
   res.json(tyranitarJSON)
 })
 
+app.post('/pokemon/codesthenos', (req, res) => {
+  let body = ''
+  req.on('data', chunk => {
+    body += chunk.toString()
+  })
+
+  req.on('end', () => {
+    const data = JSON.parse(body)
+    data.timestamp = Date.now()
+    res.status(201).json(data)
+  })
+})
+
 app.listen(PORT, () => {
   console.log(`Server listening on http://localhost:${PORT}`)
 })
