@@ -2,7 +2,7 @@
 GET http://localhost:3000/pokemon/tyranitar
 ###Necesario para separar request
 POST http://localhost:3000/pokemon/codesthenos
-Content-Type: application/json
+Content-Type: application/json; charset=utf-8
 
 {
   "name": "codesthenos",
