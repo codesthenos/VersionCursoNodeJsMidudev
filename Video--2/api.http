@@ -30,7 +30,7 @@ Content-Type: application/json; charset=utf-8
   ]
 }
 ###Necesario para separar request
-POST http://localhost:3210/pokemon/ataraxia&codesthenos
+POST http://localhost:3210/pokemon/ataraxiaandcodesthenos
 Content-Type: application/json; charset=utf-8
 
 {

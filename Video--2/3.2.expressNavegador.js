@@ -5,7 +5,11 @@ app.disable('x-powered-by')
 const PORT = process.env.PORT ?? 3210
 
 const tyranitarJSON = require('./POKEMON/tyranitar.json')
-const storeData = []
+const storeData = {
+  codesthenos: {},
+  ataraxia: {},
+  ataraxiaandcodesthenos: {}
+}
 
 app.use(express.json())
 
@@ -19,32 +23,32 @@ app.get('/pokemon/tyranitar', (req, res) => {
 
 app.post('/pokemon/codesthenos', (req, res) => {
   req.body.timestamp = Date.now()
-  storeData.push(req.body)
+  storeData.codesthenos = req.body
   res.status(201).json(req.body)
 })
 
 app.get('/pokemon/codesthenos', (req, res) => {
-  res.json(storeData)
+  res.json(storeData.codesthenos)
 })
 
 app.post('/pokemon/ataraxia', (req, res) => {
   req.body.timestamp = Date.now()
-  storeData.push(req.body)
+  storeData.ataraxia = req.body
   res.status(201).json(req.body)
 })
 
 app.get('/pokemon/ataraxia', (req, res) => {
-  res.json(storeData)
+  res.json(storeData.ataraxia)
 })
 
-app.post('/pokemon/ataraxia&codesthenos', (req, res) => {
+app.post('/pokemon/ataraxiaandcodesthenos', (req, res) => {
   req.body.timestamp = Date.now()
-  storeData.push(req.body)
+  storeData.ataraxiaandcodesthenos = req.body
   res.status(201).json(req.body)
 })
 
-app.get('/pokemon/ataraxia&codesthenos', (req, res) => {
-  res.json(storeData)
+app.get('/pokemon/ataraxiaandcodesthenos', (req, res) => {
+  res.json(storeData.ataraxiaandcodesthenos)
 })
 
 app.use((req, res) => {
