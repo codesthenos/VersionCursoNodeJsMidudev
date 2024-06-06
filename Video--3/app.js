@@ -11,23 +11,26 @@ const moviesJSON = require('./movies.json')
 app.use(express.json())
 
 app.get('/', (req, res) => {
-  res.send('<h1 style="width:100vw;heigth:100vh;line-height:100vh;text-align:center;">CODESTHENOS MOVIES</h1>')
+  res.send({ message: 'CODESTHENOS-MOVIES' })
 })
 
 app.get('/movies', (req, res) => {
   res.json(moviesJSON)
 })
 
+app.get('/movies/:id', (req, res) => {
+  const { id } = req.params
+  const filmJSON = moviesJSON.find(filmJSON => filmJSON.id === id)
+  if (filmJSON) return res.json(filmJSON)
+  res.status(404).send({ message: '404' })
+})
+
 app.get('/movies/genre=Terror', (req, res) => {
   res.json(moviesJSON)
 })
 
-app.get('/movies/1', (req, res) => {
-  res.json(moviesJSON)
-})
-
 app.use((req, res) => {
-  res.status(404).send('<h1 style="width:100vw;heigth:100vh;line-height:100vh;text-align:center;">404</h1>')
+  res.status(404).send({ message: '404' })
 })
 
 app.listen(PORT, () => {
