@@ -1,6 +1,6 @@
 const express = require('express')
 const crypto = require('node:crypto')
-const { validateNewMovie } = require('./MovieStructure/movies.js')
+const { validateNewMovie, validatePartialMovie } = require('./MovieStructure/movies.js')
 
 const moviesJSON = require('./movies.json')
 
@@ -68,6 +68,30 @@ app.post('/movies', (req, res) => {
   // ESTO NO SERIA REST API EN VIDEO--4 LO SERA
   moviesJSON.push(newMovie)
   res.status(201).json(newMovie)
+})
+
+app.patch('/movies/:id', (req, res) => {
+  const result = validatePartialMovie(req.body)
+
+  if (!result.success) {
+    return res.status(404).json({ error: JSON.parse(result.error.message) })
+  }
+
+  const { id } = req.params
+  const movieIndex = moviesJSON.findIndex(movie => movie.id === id)
+
+  if (movieIndex === -1) {
+    return res.status(404).json({ message: 'Movie not found' })
+  }
+
+  const updateMovie = {
+    ...moviesJSON[movieIndex],
+    ...result.data
+  }
+
+  moviesJSON[movieIndex] = updateMovie
+
+  return res.json(updateMovie)
 })
 
 app.use((req, res) => {

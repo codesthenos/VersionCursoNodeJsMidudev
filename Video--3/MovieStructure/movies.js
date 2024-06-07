@@ -19,6 +19,11 @@ function validateNewMovie (newMovie) {
   return movieStructure.safeParse(newMovie)
 }
 
+function validatePartialMovie (patchMovie) {
+  return movieStructure.partial().safeParse(patchMovie)
+}
+
 module.exports = {
-  validateNewMovie
+  validateNewMovie,
+  validatePartialMovie
 }
