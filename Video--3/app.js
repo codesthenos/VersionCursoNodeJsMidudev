@@ -1,13 +1,14 @@
 const express = require('express')
 const crypto = require('node:crypto')
+const { validateNewMovie } = require('./MovieStructure/movies.js')
+
+const moviesJSON = require('./movies.json')
 
 const app = express()
 
 app.disable('x-powered-by')
 
 const PORT = process.env.PORT ?? 3210
-
-const moviesJSON = require('./movies.json')
 
 app.use(express.json())
 
@@ -54,24 +55,15 @@ app.get('/movies/genre/:genre', (req, res) => {
 })
 
 app.post('/movies', (req, res) => {
-  const {
-    title,
-    year,
-    director,
-    poster,
-    genre,
-    duration,
-    rate
-  } = req.body
+  const result = validateNewMovie(req.body)
+
+  if (result.error) {
+    return res.status(400).json(result.error.message)
+  }
+
   const newMovie = {
     id: crypto.randomUUID(), // Crea random id, nativo de node
-    title,
-    year,
-    director,
-    poster,
-    genre,
-    duration,
-    rate: rate ?? 0
+    ...result.data
   }
   // ESTO NO SERIA REST API EN VIDEO--4 LO SERA
   moviesJSON.push(newMovie)

@@ -28,3 +28,20 @@ Content-Type: application/json; charset=utf-8
   "duration": 101,
   "rate": 11
 }
+### forzando error en POST para verificar validacion
+POST http://localhost:3210/movies
+Content-Type: application/json; charset=utf-8
+
+{
+  "title": 35505,
+  "year": 2022,
+  "director": "Alberto Armas",
+  "poster": "https://pics.filmaffinity.com/Slasher-171881556-large.jpg",
+  "genre": [
+    "Terror",
+    "Slasher",
+    "Comedy"
+  ],
+  "duration": 101,
+  "rate": 11
+}
