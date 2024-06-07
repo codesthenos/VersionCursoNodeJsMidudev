@@ -25,8 +25,11 @@ app.get('/movies/:id', (req, res) => {
   res.status(404).send({ message: '404' })
 })
 
-app.get('/movies/genre=Terror', (req, res) => {
-  res.json(moviesJSON)
+app.get('/movies/genre/:genre', (req, res) => {
+  const { genre } = req.params
+  const filmJSON = moviesJSON.filter(filmJSON => filmJSON.genre.some(g => g.toLowerCase() === genre.toLocaleLowerCase()))
+  if (filmJSON) return res.json(filmJSON)
+  res.status(404).send({ message: '404' })
 })
 
 app.use((req, res) => {
