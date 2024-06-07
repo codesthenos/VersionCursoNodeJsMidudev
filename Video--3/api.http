@@ -11,3 +11,20 @@ GET http://localhost:3210/movies?director=Frank
 GET http://localhost:3210/movies?director=Frank%20Darabont&rate=10
 ### Solo rate
 GET http://localhost:3210/movies?rate=8.9
+### Creando una pelicula con POST
+POST http://localhost:3210/movies
+Content-Type: application/json; charset=utf-8
+
+{
+  "title": "Slasher",
+  "year": 2022,
+  "director": "Alberto Armas",
+  "poster": "https://pics.filmaffinity.com/Slasher-171881556-large.jpg",
+  "genre": [
+    "Terror",
+    "Slasher",
+    "Comedy"
+  ],
+  "duration": 101,
+  "rate": 11
+}

@@ -1,4 +1,5 @@
 const express = require('express')
+const crypto = require('node:crypto')
 
 const app = express()
 
@@ -50,6 +51,31 @@ app.get('/movies/genre/:genre', (req, res) => {
   const filmsByGenreJSON = moviesJSON.filter(filmJSON => filmJSON.genre.some(g => g.toLowerCase() === genre.toLocaleLowerCase()))
   if (filmsByGenreJSON.length > 0) return res.json(filmsByGenreJSON)
   res.status(404).send({ message: 'Genre not found' })
+})
+
+app.post('/movies', (req, res) => {
+  const {
+    title,
+    year,
+    director,
+    poster,
+    genre,
+    duration,
+    rate
+  } = req.body
+  const newMovie = {
+    id: crypto.randomUUID(), // Crea random id, nativo de node
+    title,
+    year,
+    director,
+    poster,
+    genre,
+    duration,
+    rate: rate ?? 0
+  }
+  // ESTO NO SERIA REST API EN VIDEO--4 LO SERA
+  moviesJSON.push(newMovie)
+  res.status(201).json(newMovie)
 })
 
 app.use((req, res) => {
