@@ -15,6 +15,13 @@ app.get('/', (req, res) => {
 })
 
 app.get('/movies', (req, res) => {
+  const { director } = req.query
+  if (director) {
+    const filmsByDirectorJSON = moviesJSON.filter(filmJSON => filmJSON.director.toLowerCase() === director.toLocaleLowerCase())
+    if (filmsByDirectorJSON.length > 0) return res.json(filmsByDirectorJSON)
+    res.status(404).send({ message: 'Director not found' })
+  }
+
   res.json(moviesJSON)
 })
 
@@ -27,9 +34,9 @@ app.get('/movies/:id', (req, res) => {
 
 app.get('/movies/genre/:genre', (req, res) => {
   const { genre } = req.params
-  const filmJSON = moviesJSON.filter(filmJSON => filmJSON.genre.some(g => g.toLowerCase() === genre.toLocaleLowerCase()))
-  if (filmJSON) return res.json(filmJSON)
-  res.status(404).send({ message: '404' })
+  const filmsByGenreJSON = moviesJSON.filter(filmJSON => filmJSON.genre.some(g => g.toLowerCase() === genre.toLocaleLowerCase()))
+  if (filmsByGenreJSON.length > 0) return res.json(filmsByGenreJSON)
+  res.status(404).send({ message: 'Genre not found' })
 })
 
 app.use((req, res) => {
