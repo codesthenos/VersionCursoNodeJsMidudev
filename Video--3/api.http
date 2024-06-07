@@ -7,3 +7,7 @@ GET http://localhost:3210/movies/dcdd0fad-a94c-4810-8acc-5f108d3b18c3
 GET http://localhost:3210/movies/genre/crimes
 ### Recuperar las peliculas de un director
 GET http://localhost:3210/movies?director=Frank
+### Recuperar las peliculas de un director concreto y rating > el numero que ponga aqui
+GET http://localhost:3210/movies?director=Frank%20Darabont&rate=10
+### Solo rate
+GET http://localhost:3210/movies?rate=8.9

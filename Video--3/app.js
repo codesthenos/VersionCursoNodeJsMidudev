@@ -15,11 +15,24 @@ app.get('/', (req, res) => {
 })
 
 app.get('/movies', (req, res) => {
-  const { director } = req.query
+  const { director, rate } = req.query
   if (director) {
     const filmsByDirectorJSON = moviesJSON.filter(filmJSON => filmJSON.director.toLowerCase() === director.toLocaleLowerCase())
-    if (filmsByDirectorJSON.length > 0) return res.json(filmsByDirectorJSON)
+    if (filmsByDirectorJSON.length > 0) {
+      if (rate) {
+        const filmsByDirectorAndRateJSON = filmsByDirectorJSON.filter(filmJSON => filmJSON.rate > rate)
+        if (filmsByDirectorAndRateJSON.length > 0) return res.json(filmsByDirectorAndRateJSON)
+        res.status(404).send({ message: 'Director found but not rating match' })
+      }
+      return res.json(filmsByDirectorJSON)
+    }
     res.status(404).send({ message: 'Director not found' })
+  }
+
+  if (rate) {
+    const filmsByRate = moviesJSON.filter(filmJSON => filmJSON.rate > rate)
+    if (filmsByRate.length > 0) return res.json(filmsByRate)
+    res.status(404).send({ message: 'No rating match' })
   }
 
   res.json(moviesJSON)
