@@ -1,30 +1,41 @@
 const express = require('express')
 const crypto = require('node:crypto')
-const { validateNewMovie, validatePartialMovie } = require('./MovieStructure/movies.js')
+const cors = require('cors')
 
+const { validateNewMovie, validatePartialMovie } = require('./MovieStructure/movies.js')
 const moviesJSON = require('./movies.json')
 
 const app = express()
 
-app.disable('x-powered-by')
-
 const PORT = process.env.PORT ?? 3210
 
-const ACCEPTED_ORIGINS = [
-  'http://localhost:8080'
-]
 app.use(express.json())
+
+app.use(cors({
+  origin: (origin, callback) => {
+    const ACCEPTED_ORIGINS = [
+      'http://localhost:8080'
+    ]
+
+    if (ACCEPTED_ORIGINS.includes(origin)) {
+      return callback(null, true)
+    }
+
+    if (!origin) {
+      return callback(null, true)
+    }
+
+    return callback(new Error('Not allowed by CORS'))
+  }
+}))
+
+app.disable('x-powered-by')
 
 app.get('/', (req, res) => {
   res.send({ message: 'CODESTHENOS-MOVIES' })
 })
 
 app.get('/movies', (req, res) => {
-  const origin = req.header('origin')
-  if (ACCEPTED_ORIGINS.includes(origin)) {
-    res.header('Access-Control-Allow-Origin', origin)
-  }
-
   const { director, rate } = req.query
   if (director) {
     const filmsByDirectorJSON = moviesJSON.filter(filmJSON => filmJSON.director.toLowerCase() === director.toLocaleLowerCase())
@@ -79,11 +90,6 @@ app.post('/movies', (req, res) => {
 })
 
 app.delete('/movies/:id', (req, res) => {
-  const origin = req.header('origin')
-  if (ACCEPTED_ORIGINS.includes(origin)) {
-    res.header('Access-Control-Allow-Origin', origin)
-  }
-
   const { id } = req.params
   const movieIndex = moviesJSON.findIndex(movie => movie.id === id)
 
@@ -118,15 +124,6 @@ app.patch('/movies/:id', (req, res) => {
   moviesJSON[movieIndex] = updateMovie
 
   return res.json(updateMovie)
-})
-
-app.options('/movies/:id', (req, res) => {
-  const origin = req.header('origin')
-  if (ACCEPTED_ORIGINS.includes(origin)) {
-    res.header('Access-Control-Allow-Origin', origin)
-    res.header('Access-Control-Allow-Methods', 'GET, POST, PUT, PATCH, DELETE')
-  }
-  res.sendStatus(200)
 })
 
 app.listen(PORT, () => {
