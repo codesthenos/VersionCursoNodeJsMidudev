@@ -83,6 +83,7 @@ app.delete('/movies/:id', (req, res) => {
   if (ACCEPTED_ORIGINS.includes(origin)) {
     res.header('Access-Control-Allow-Origin', origin)
   }
+
   const { id } = req.params
   const movieIndex = moviesJSON.findIndex(movie => movie.id === id)
 
@@ -119,8 +120,13 @@ app.patch('/movies/:id', (req, res) => {
   return res.json(updateMovie)
 })
 
-app.use((req, res) => {
-  res.status(404).send({ message: '404' })
+app.options('/movies/:id', (req, res) => {
+  const origin = req.header('origin')
+  if (ACCEPTED_ORIGINS.includes(origin)) {
+    res.header('Access-Control-Allow-Origin', origin)
+    res.header('Access-Control-Allow-Methods', 'GET, POST, PUT, PATCH, DELETE')
+  }
+  res.sendStatus(200)
 })
 
 app.listen(PORT, () => {
