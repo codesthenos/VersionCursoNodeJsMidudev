@@ -71,6 +71,19 @@ app.post('/movies', (req, res) => {
   res.status(201).json(newMovie)
 })
 
+app.delete('/movies/:id', (req, res) => {
+  const { id } = req.params
+  const movieIndex = moviesJSON.findIndex(movie => movie.id === id)
+
+  if (movieIndex === -1) {
+    return res.status(404).json({ message: 'Movie not found' })
+  }
+
+  moviesJSON.splice(movieIndex, 1)
+
+  return res.json({ message: 'Movie deleted' })
+})
+
 app.patch('/movies/:id', (req, res) => {
   const result = validatePartialMovie(req.body)
 
