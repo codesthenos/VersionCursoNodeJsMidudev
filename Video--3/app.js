@@ -17,6 +17,7 @@ app.get('/', (req, res) => {
 })
 
 app.get('/movies', (req, res) => {
+  res.header('Access-Control-Allow-Origin', '*')
   const { director, rate } = req.query
   if (director) {
     const filmsByDirectorJSON = moviesJSON.filter(filmJSON => filmJSON.director.toLowerCase() === director.toLocaleLowerCase())
