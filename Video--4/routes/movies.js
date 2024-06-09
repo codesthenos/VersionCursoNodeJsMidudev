@@ -1,101 +1,43 @@
 import { Router } from 'express'
-import { randomUUID } from 'node:crypto'
 
 import { validateNewMovie, validatePartialMovie } from './../MovieStructure/movies.js'
-
-import { readJSON } from './../utils.js'
-
-const moviesJSON = readJSON('./movies.json')
+import { MovieModel } from '../models/movie.js'
 
 export const moviesRouter = Router()
 
-moviesRouter.get('/', (req, res) => {
+moviesRouter.get('/', async (req, res) => {
   const { director, rate } = req.query
-  if (director) {
-    const filmsByDirectorJSON = moviesJSON.filter(filmJSON => filmJSON.director.toLowerCase() === director.toLocaleLowerCase())
-    if (filmsByDirectorJSON.length > 0) {
-      if (rate) {
-        const filmsByDirectorAndRateJSON = filmsByDirectorJSON.filter(filmJSON => filmJSON.rate > rate)
-        if (filmsByDirectorAndRateJSON.length > 0) return res.json(filmsByDirectorAndRateJSON)
-        res.status(404).send({ message: 'Director found but not rating match' })
-      }
-      return res.json(filmsByDirectorJSON)
-    }
-    res.status(404).send({ message: 'Director not found' })
-  }
-
-  if (rate) {
-    const filmsByRate = moviesJSON.filter(filmJSON => filmJSON.rate > rate)
-    if (filmsByRate.length > 0) return res.json(filmsByRate)
-    res.status(404).send({ message: 'No rating match' })
-  }
-
-  res.json(moviesJSON)
+  const movies = await MovieModel.getAll({ director, rate })
+  res.json(movies)
 })
 
-moviesRouter.get('/:id', (req, res) => {
+moviesRouter.get('/:id', async (req, res) => {
   const { id } = req.params
-  const filmJSON = moviesJSON.find(filmJSON => filmJSON.id === id)
-  if (filmJSON) return res.json(filmJSON)
-  res.status(404).send({ message: '404' })
+  const movie = await MovieModel.getById({ id })
+  res.json(movie)
 })
 
-moviesRouter.get('/genre/:genre', (req, res) => {
+moviesRouter.get('/genre/:genre', async (req, res) => {
   const { genre } = req.params
-  const filmsByGenreJSON = moviesJSON.filter(filmJSON => filmJSON.genre.some(g => g.toLowerCase() === genre.toLocaleLowerCase()))
-  if (filmsByGenreJSON.length > 0) return res.json(filmsByGenreJSON)
-  res.status(404).send({ message: 'Genre not found' })
+  const movies = await MovieModel.getByGenre({ genre })
+  res.json(movies)
 })
 
-moviesRouter.post('/', (req, res) => {
+moviesRouter.post('/', async (req, res) => {
   const result = validateNewMovie(req.body)
-
-  if (result.error) {
-    return res.status(400).json({ error: JSON.parse(result.error.message) })
-  }
-
-  const newMovie = {
-    id: randomUUID(),
-    ...result.data
-  }
-
-  moviesJSON.push(newMovie)
-  res.status(201).json(newMovie)
+  const newMovie = await MovieModel.create({ input: result.data })
+  res.statusCode(201).res.json(newMovie)
 })
 
-moviesRouter.delete('/:id', (req, res) => {
+moviesRouter.delete('/:id', async (req, res) => {
   const { id } = req.params
-  const movieIndex = moviesJSON.findIndex(movie => movie.id === id)
-
-  if (movieIndex === -1) {
-    return res.status(404).json({ message: 'Movie not found' })
-  }
-
-  moviesJSON.splice(movieIndex, 1)
-
-  return res.json({ message: 'Movie deleted' })
+  const isMovieDeleted = await MovieModel.delete({ id })
+  res.json({ message: `Movie deleted = ${isMovieDeleted}` })
 })
 
-moviesRouter.patch('/:id', (req, res) => {
+moviesRouter.patch('/:id', async (req, res) => {
+  const { id } = req.params
   const result = validatePartialMovie(req.body)
-
-  if (!result.success) {
-    return res.status(404).json({ error: JSON.parse(result.error.message) })
-  }
-
-  const { id } = req.params
-  const movieIndex = moviesJSON.findIndex(movie => movie.id === id)
-
-  if (movieIndex === -1) {
-    return res.status(404).json({ message: 'Movie not found' })
-  }
-
-  const updateMovie = {
-    ...moviesJSON[movieIndex],
-    ...result.data
-  }
-
-  moviesJSON[movieIndex] = updateMovie
-
-  return res.json(updateMovie)
+  const updatedMovie = await MovieModel.update({ id, input: result.data })
+  res.json(updatedMovie)
 })
