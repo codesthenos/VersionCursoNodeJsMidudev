@@ -26,7 +26,8 @@ moviesRouter.get('/genre/:genre', async (req, res) => {
 moviesRouter.post('/', async (req, res) => {
   const result = validateNewMovie(req.body)
   const newMovie = await MovieModel.create({ input: result.data })
-  res.statusCode(201).res.json(newMovie)
+  res.status(201)
+  res.json(newMovie)
 })
 
 moviesRouter.delete('/:id', async (req, res) => {

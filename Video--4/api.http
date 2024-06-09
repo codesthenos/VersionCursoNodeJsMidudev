@@ -46,7 +46,7 @@ Content-Type: application/json; charset=utf-8
   "rate": 11
 }
 ### actualizar una parte de una pelicula con PATCH
-PATCH http://localhost:3210/movies/ca046209-1178-4ed7-bfbe-149954f7c6de
+PATCH http://localhost:3210/movies/7122b578-fcfb-45cf-8f6f-3c94fb084032
 Content-Type: application/json; charset=utf-8
 
 {
