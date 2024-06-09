@@ -10,7 +10,9 @@ export class MovieModel {
       const filmsByDirectorJSON = moviesJSON.filter(filmJSON => filmJSON.director.toLowerCase() === director.toLocaleLowerCase())
       if (filmsByDirectorJSON.length > 0) {
         if (rate) {
-          return filmsByDirectorJSON.filter(filmJSON => filmJSON.rate >= rate)
+          const filmsByDirectorAndRate = filmsByDirectorJSON.filter(filmJSON => filmJSON.rate >= rate)
+          if (filmsByDirectorAndRate.length > 0) return filmsByDirectorAndRate
+          return filmsByDirectorJSON
         }
         return filmsByDirectorJSON
       }
