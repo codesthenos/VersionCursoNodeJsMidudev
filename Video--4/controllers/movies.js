@@ -11,20 +11,24 @@ export class MovieController {
   static async getById (req, res) {
     const { id } = req.params
     const movie = await MovieModel.getById({ id })
-    res.json(movie)
+    if (movie) return res.json(movie)
+    res.status(404).json({ message: 'Movie not found' })
   }
 
   static async getByGenre (req, res) {
     const { genre } = req.params
     const movies = await MovieModel.getByGenre({ genre })
-    res.json(movies)
+    if (movies) return res.json(movies)
+    res.status(404).json({ message: 'Genre not found' })
   }
 
   static async create (req, res) {
     const result = validateNewMovie(req.body)
+    if (!result.success) {
+      return res.status(400).json({ error: JSON.parse(result.error.message) })
+    }
     const newMovie = await MovieModel.create({ input: result.data })
-    res.status(201)
-    res.json(newMovie)
+    res.status(201).json(newMovie)
   }
 
   static async delete (req, res) {

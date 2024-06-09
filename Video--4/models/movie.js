@@ -8,33 +8,29 @@ export class MovieModel {
   static async getAll ({ director, rate }) {
     if (director) {
       const filmsByDirectorJSON = moviesJSON.filter(filmJSON => filmJSON.director.toLowerCase() === director.toLocaleLowerCase())
-      if (rate) {
-        return filmsByDirectorJSON.filter(filmJSON => filmJSON.rate > rate)
+      if (filmsByDirectorJSON.length > 0) {
+        if (rate) {
+          return filmsByDirectorJSON.filter(filmJSON => filmJSON.rate >= rate)
+        }
+        return filmsByDirectorJSON
       }
-      return filmsByDirectorJSON
     }
 
-    if (rate) {
-      return moviesJSON.filter(filmJSON => filmJSON.rate > rate)
+    if (rate && rate > 0 && rate < 10) {
+      return moviesJSON.filter(filmJSON => filmJSON.rate >= rate)
     }
 
     return moviesJSON
   }
 
   static async getById ({ id }) {
-    if (id) {
-      return moviesJSON.find(filmJSON => filmJSON.id === id)
-    }
-
-    return moviesJSON
+    return moviesJSON.find(filmJSON => filmJSON.id === id)
   }
 
   static async getByGenre ({ genre }) {
-    if (genre) {
-      return moviesJSON.filter(filmJSON => filmJSON.genre.some(g => g.toLowerCase() === genre.toLocaleLowerCase()))
-    }
-
-    return moviesJSON
+    const movies = moviesJSON.filter(filmJSON => filmJSON.genre.some(g => g.toLowerCase() === genre.toLocaleLowerCase()))
+    if (movies.length > 0) return movies
+    return false
   }
 
   static async create ({ input }) {
