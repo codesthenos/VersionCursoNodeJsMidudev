@@ -1,15 +1,29 @@
-const express = require('express')
-const crypto = require('node:crypto')
-const cors = require('cors')
+import express, { json } from 'express'
+import { randomUUID } from 'node:crypto'
+import cors from 'cors'
 
-const { validateNewMovie, validatePartialMovie } = require('./MovieStructure/movies.js')
+import { validateNewMovie, validatePartialMovie } from './MovieStructure/movies.js'
+
+// import moviesJSON from './movies.json' with FORMA DE IMPORTAR .json EN FUTURO PROXIMO
+
+/* FORMA ACTUAL 1 IMPORTANDO fs Y METIENDO EN UNA CONSTANTE EL RESULTADO DEL PARSEO Y LECTURA DEL JSON
+  import fs from 'node:fs'
+  const moviesJSON = JSON.parse(fs.readFileSync('./movies.json', 'utf-8'))
+*/
+
+// CREANDO LA FUNCION 'require()' DE CommonJS Y UNA VEZ CREADA, IMPORTAR EL '.json' DIRECTAMENTE COMO HACIAMOS EN CommonJS
+// IMPORTAMOS 'createRequire()' PARA PODER CREAR LA FUNCION require EN ESModules
+import { createRequire } from 'node:module'
+// CREAMOS LA FUNCION 'require()' USANDO 'import.meta.url' QUE NOS DEVUELVE LA DIRECCION DEL ARCHIVO EN EL QUE ESTAMOS
+const require = createRequire(import.meta.url)
+// NOS TRAEMOS EL '.json' COMO HACIAMOS CUANDO USABAMOS CommonJS
 const moviesJSON = require('./movies.json')
 
 const app = express()
 
 const PORT = process.env.PORT ?? 3210
 
-app.use(express.json())
+app.use(json())
 
 app.use(cors({
   origin: (origin, callback) => {
@@ -81,7 +95,7 @@ app.post('/movies', (req, res) => {
   }
 
   const newMovie = {
-    id: crypto.randomUUID(), // Crea random id, nativo de node
+    id: randomUUID(), // Crea random id, nativo de node
     ...result.data
   }
   // ESTO NO SERIA REST API EN VIDEO--4 LO SERA

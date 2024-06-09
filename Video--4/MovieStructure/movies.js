@@ -1,4 +1,4 @@
-const z = require('zod') // Con esta dependencia vamos a validar la entrada de datos del POST
+import z from 'zod'
 
 const movieStructure = z.object({
   title: z.string({
@@ -15,15 +15,10 @@ const movieStructure = z.object({
   rate: z.number().min(0).max(11)
 })
 
-function validateNewMovie (newMovie) {
+export function validateNewMovie (newMovie) {
   return movieStructure.safeParse(newMovie)
 }
 
-function validatePartialMovie (patchMovie) {
+export function validatePartialMovie (patchMovie) {
   return movieStructure.partial().safeParse(patchMovie)
-}
-
-module.exports = {
-  validateNewMovie,
-  validatePartialMovie
 }
