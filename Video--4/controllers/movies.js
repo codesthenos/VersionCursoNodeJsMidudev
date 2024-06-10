@@ -43,9 +43,14 @@ export class MovieController {
     if (!result.success) {
       return res.status(400).json({ error: JSON.parse(result.error.message) })
     }
+
     const { id } = req.params
     const updatedMovie = await MovieModel.update({ id, input: result.data })
-    if (updatedMovie) return res.json(updatedMovie)
+
+    if (updatedMovie) {
+      return res.json(updatedMovie)
+    }
+
     return res.status(404).json({ message: 'Movie to update not found' })
   }
 }

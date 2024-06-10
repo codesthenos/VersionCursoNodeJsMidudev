@@ -42,7 +42,7 @@ export class MovieModel {
 
   static async getById ({ id }) {
     const db = await connect()
-    const objectId = new ObjectId(id)
+    const objectId = ObjectId.createFromHexString(id)
     return db.findOne({ _id: objectId })
   }
 
@@ -59,19 +59,20 @@ export class MovieModel {
 
   static async delete ({ id }) {
     const db = await connect()
-    const objectId = new ObjectId(id)
+    const objectId = ObjectId.createFromHexString(id)
     const { deletedCount } = await db.deleteOne({ _id: objectId })
     return deletedCount > 0
   }
 
   static async update ({ id, input }) {
     const db = await connect()
-    const objectId = new ObjectId(id)
+    const objectId = ObjectId.createFromHexString(id)
 
-    const { ok, value } = await db.findOneAndUpdate({ _id: objectId }, { $set: input }, { returnNewDocument: true })
-
-    if (!ok) return false
-
-    return value
+    const result = await db.findOneAndUpdate(
+      { _id: objectId },
+      { $set: input },
+      { returnDocument: 'after' }
+    )
+    return result
   }
 }
