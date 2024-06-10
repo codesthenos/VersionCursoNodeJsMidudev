@@ -1,9 +1,9 @@
 ### Recuperar todas las peliculas
 GET http://localhost:3210/movies
 ### Recuperar una pelicula por id
-GET http://localhost:3210/movies/6665fec77f6b2dac60d506d6
+GET http://localhost:3210/movies/66673d3c7939d0163ac8a550
 ### Recuperar las peliculas de un genero
-GET http://localhost:3210/movies/genre/crime
+GET http://localhost:3210/movies/genre/teRRor
 ### Recuperar las peliculas de un director
 GET http://localhost:3210/movies?director=Frank
 ### Recuperar las peliculas de un director concreto y rating > el numero que ponga aqui
@@ -45,7 +45,7 @@ Content-Type: application/json; charset=utf-8
   "rate": 11
 }
 ### probamos a borrar una pelicula
-DELETE http://localhost:3210/movies/dcdd0fad-a94c-4810-8acc-5f108d3b18c3
+DELETE http://localhost:3210/movies/6665fec77f6b2dac60d506d6
 ### actualizar una parte de una pelicula con PATCH
 PATCH http://localhost:3210/movies/66673d3c7939d0163ac8a550
 Content-Type: application/json; charset=utf-8

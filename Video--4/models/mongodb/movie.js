@@ -46,6 +46,20 @@ export class MovieModel {
     return db.findOne({ _id: objectId })
   }
 
+  static async getByGenre ({ genre }) {
+    const db = await connect()
+    const movies = await db.find({
+      genre: {
+        $elemMatch: {
+          $regex: genre,
+          $options: 'i'
+        }
+      }
+    }).toArray()
+
+    return movies.length > 0 ? movies : false
+  }
+
   static async create ({ input }) {
     const db = await connect()
 
