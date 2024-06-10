@@ -7,7 +7,7 @@ GET http://localhost:3210/movies/genre/teRRor
 ### Recuperar las peliculas de un director
 GET http://localhost:3210/movies?director=Frank
 ### Recuperar las peliculas de un director concreto y rating > el numero que ponga aqui
-GET http://localhost:3210/movies?director=Frank%20Darabont&rate=10
+GET http://localhost:3210/movies?director=alberto%20ARMAS&rate=10
 ### Solo rate
 GET http://localhost:3210/movies?rate=8.9
 ### Creando una pelicula con POST

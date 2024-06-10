@@ -23,18 +23,42 @@ async function connect () {
 }
 
 export class MovieModel {
-  static async getAll ({ genre }) {
+  static async getAll ({ director, rate }) {
     const db = await connect()
-
-    if (genre) {
-      return db.find({
-        genre: {
+    if (director) {
+      const moviesByDirector = await db.find({
+        director: {
           $elemMatch: {
-            $regex: genre,
+            $regex: director,
             $options: 'i'
           }
         }
       }).toArray()
+      if (moviesByDirector.length > 0) {
+        if (rate) {
+          const moviesByDirectorAndRate = await db.find({
+            rate: {
+              $elemMatch: {
+                $gte: rate
+              }
+            }
+          }).toArray()
+          if (moviesByDirectorAndRate.length > 0) return moviesByDirectorAndRate
+        }
+        return moviesByDirector
+      }
+    }
+
+    if (rate && rate > 0 && rate < 10) {
+      const moviesByRate = await db.find({
+        rate: {
+          $elemMatch: {
+            $gte: rate
+          }
+        }
+      }).toArray()
+
+      if (moviesByRate.length > 0) return moviesByRate
     }
 
     return db.find({}).toArray()
