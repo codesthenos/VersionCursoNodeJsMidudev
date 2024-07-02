@@ -10,6 +10,9 @@ VALUES ('Drama'),
     ('Romance'),
     ('Horror');
 
+ALTER TABLE moviesdb
+MODIFY COLUMN rate DECIMAL(3,1) NOT NULL;
+
 INSERT
 INTO movie (id, title, year, director, duration, poster, rate)
 VALUES (UUID_TO_BIN(UUID()), 'Slasher', 2022, 'Alberto Armas', 101, 'https://pics.filmaffinity.com/Slasher-171881556-large.jpg', 10),
