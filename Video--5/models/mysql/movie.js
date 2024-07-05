@@ -118,6 +118,24 @@ export class MovieModel {
   }
 
   static async update ({ id, input }) {
+    const {
+      title,
+      year,
+      duration,
+      director,
+      poster,
+      rate
+    } = input
+    console.log(`UUID_TO_BIN(${id})`)
+    try {
+      const [movie] = await connection.query(
+        'UPDATE movie SET title = ?, year = ?, duration = ?, director = ?, poster = ?, rate = ? WHERE id = UUID_TO_BIN(?);',
+        [title, year, duration, director, poster, rate, id]
+      )
 
+      return movie[0]
+    } catch (e) {
+      throw new Error('Error updating the movie')
+    }
   }
 }
