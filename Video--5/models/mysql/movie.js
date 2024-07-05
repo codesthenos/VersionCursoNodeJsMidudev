@@ -12,11 +12,27 @@ const connection = await mysql.createConnection(config)
 
 export class MovieModel {
   static async getAll ({ director, rate }) {
-    const result = await connection.query(
-      'SELECT * FROM movie'
-    )
+    let query = 'SELECT * FROM movie'
+    const queryParams = []
 
-    console.log(result)
+    if (director || (rate && rate > 0 && rate <= 10)) {
+      query += ' WHERE'
+
+      if (director) {
+        query += ' LOWER(director) LIKE ?'
+        queryParams.push(`%${director.toLowerCase()}%`)
+      }
+
+      if (rate && rate > 0 && rate <= 10) {
+        if (director) query += ' AND'
+        query += ' rate >= ?'
+        queryParams.push(rate)
+      }
+    }
+
+    const [result] = await connection.query(query, queryParams)
+
+    return result
   }
 
   static async getById ({ id }) {
