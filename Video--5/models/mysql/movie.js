@@ -126,14 +126,30 @@ export class MovieModel {
       poster,
       rate
     } = input
-    console.log(`UUID_TO_BIN(${id})`)
+
     try {
       const [movie] = await connection.query(
-        'UPDATE movie SET title = ?, year = ?, duration = ?, director = ?, poster = ?, rate = ? WHERE id = UUID_TO_BIN(?);',
-        [title, year, duration, director, poster, rate, id]
+        'SELECT title, year, director, duration, poster, rate FROM movie WHERE id = UUID_TO_BIN(?);',
+        [id]
       )
 
-      return movie[0]
+      const currentMovie = movie[0]
+
+      const updatedmovie = {
+        title: title !== undefined ? title : currentMovie.title,
+        year: year !== undefined ? year : currentMovie.year,
+        duration: duration !== undefined ? duration : currentMovie.duration,
+        director: director !== undefined ? director : currentMovie.director,
+        poster: poster !== undefined ? poster : currentMovie.poster,
+        rate: rate !== undefined ? rate : currentMovie.rate
+      }
+
+      await connection.query(
+        'UPDATE movie SET title = ?, year = ?, duration = ?, director = ?, poster = ?, rate = ? WHERE id = UUID_TO_BIN(?);',
+        [updatedmovie.title, updatedmovie.year, updatedmovie.duration, updatedmovie.director, updatedmovie.poster, updatedmovie.rate, id]
+      )
+
+      return updatedmovie
     } catch (e) {
       throw new Error('Error updating the movie')
     }

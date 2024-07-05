@@ -51,5 +51,7 @@ PATCH http://localhost:3210/movies/c4b81f76-3b14-11ef-856a-0a0027000005
 Content-Type: application/json; charset=utf-8
 
 {
+  "title": "SARA Y GUILLE EN CANARIAS",
+  "director": "Ataraxia&Codesthenos",
   "rate": 9.9
 }
