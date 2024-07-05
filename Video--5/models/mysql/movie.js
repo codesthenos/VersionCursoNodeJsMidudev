@@ -106,18 +106,6 @@ export class MovieModel {
   }
 
   static async delete ({ id }) {
-    let result
-
-    try {
-      const [movie] = await connection.query(
-        `SELECT BIN_TO_UUID(id) id, title, year, director, duration, poster, rate
-          FROM movie WHERE id = UUID_TO_BIN(?);`, [id]
-      )
-      result = movie[0]
-    } catch (e) {
-      throw new Error('Error finding the movie')
-    }
-
     try {
       await connection.query(
         'DELETE FROM movie WHERE id = UUID_TO_BIN(?);', [id]
@@ -126,7 +114,7 @@ export class MovieModel {
       throw new Error('Error deleting the movie')
     }
 
-    return result
+    return true
   }
 
   static async update ({ id, input }) {

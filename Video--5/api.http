@@ -45,7 +45,7 @@ Content-Type: application/json; charset=utf-8
   "rate": 11
 }
 ### probamos a borrar una pelicula
-DELETE http://localhost:3210/movies/5d8b3b4c-3af3-11ef-856a-0a0027000005
+DELETE http://localhost:3210/movies/27936561-3b12-11ef-856a-0a0027000005
 ### actualizar una parte de una pelicula con PATCH
 PATCH http://localhost:3210/movies/66673d3c7939d0163ac8a550
 Content-Type: application/json; charset=utf-8
