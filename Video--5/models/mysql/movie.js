@@ -25,7 +25,7 @@ export class MovieModel {
 
       if (rate && rate > 0 && rate <= 10) {
         if (director) query += ' AND'
-        query += ' rate >= ?'
+        query += ' rate >= ?;'
         queryParams.push(rate)
       }
     }
@@ -36,7 +36,7 @@ export class MovieModel {
       return result
     }
 
-    [result] = await connection.query('SELECT BIN_TO_UUID(id) id, title, year, director, duration, poster, rate FROM movie')
+    [result] = await connection.query('SELECT BIN_TO_UUID(id) id, title, year, director, duration, poster, rate FROM movie;')
 
     return result
   }
@@ -44,14 +44,14 @@ export class MovieModel {
   static async getById ({ id }) {
     let [result] = await connection.query(
       `SELECT BIN_TO_UUID(id) id, title, year, director, duration, poster, rate
-        FROM movie WHERE id = UUID_TO_BIN(?)`, [id]
+        FROM movie WHERE id = UUID_TO_BIN(?);`, [id]
     )
 
     if (result.length > 0) {
       return result
     }
 
-    [result] = await connection.query('SELECT BIN_TO_UUID(id) id, title, year, director, duration, poster, rate FROM movie')
+    [result] = await connection.query('SELECT BIN_TO_UUID(id) id, title, year, director, duration, poster, rate FROM movie;')
 
     return result
   }
@@ -61,20 +61,48 @@ export class MovieModel {
       `SELECT BIN_TO_UUID(movie.id) id, movie.title, movie.year, movie.director, movie.duration, movie.poster, movie.rate FROM movie 
        JOIN movie_genre ON movie.id = movie_genre.movie_id 
        JOIN genre ON movie_genre.genre_id = genre.id
-       WHERE genre.name = ?`, [genre]
+       WHERE genre.name = ?;`, [genre]
     )
 
     if (result.length > 0) {
       return result
     }
 
-    [result] = await connection.query('SELECT BIN_TO_UUID(id) id, title, year, director, duration, poster, rate FROM movie')
+    [result] = await connection.query('SELECT BIN_TO_UUID(id) id, title, year, director, duration, poster, rate FROM movie;')
 
     return result
   }
 
   static async create ({ input }) {
+    const {
+      title,
+      year,
+      duration,
+      director,
+      poster,
+      rate
+    } = input
 
+    const [uuidResult] = await connection.query('SELECT UUID() uuid;')
+    const [{ uuid }] = uuidResult
+
+    try {
+      await connection.query(
+        `INSERT INTO movie (id, title, year, director, duration, poster, rate)
+        VALUES (UUID_TO_BIN("${uuid}"), ?, ?, ?, ?, ?, ?);`,
+        [title, year, director, duration, poster, rate]
+      )
+    } catch (e) {
+      throw new Error('Error creating movie')
+      // enviar log del error (e)...
+    }
+
+    const [movies] = await connection.query(
+      `SELECT BIN_TO_UUID(id) id, title, year, director, duration, poster, rate FROM movie
+      WHERE id = UUID_TO_BIN(?);`, [uuid]
+    )
+
+    return movies[0]
   }
 
   static async delete ({ id }) {
