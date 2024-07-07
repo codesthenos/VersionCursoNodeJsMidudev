@@ -1,0 +1,15 @@
+{
+  "name": "video--6",
+  "version": "1.0.0",
+  "description": "chat tiempo real websockets",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "socket.io",
+    "morgan"
+  ],
+  "author": "Guillermo Ruiz Arranz - codesthenos",
+  "license": "ISC"
+}
