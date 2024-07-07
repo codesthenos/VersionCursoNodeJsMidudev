@@ -5,7 +5,10 @@
   "main": "app.js",
   "type": "module",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "server-mysql": "node --watch server-mysql.js",
+    "server-mongo": "node --watch server-mongodb.js",
+    "server-local": "node --watch server-localFyleSystem.js"
   },
   "keywords": [
     "API",
@@ -19,6 +22,7 @@
     "cors": "2.8.5",
     "express": "4.19.2",
     "mongodb": "^6.7.0",
+    "mysql2": "^3.10.2",
     "zod": "3.23.8"
   }
 }

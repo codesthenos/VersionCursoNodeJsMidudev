@@ -25,7 +25,7 @@ Content-Type: application/json; charset=utf-8
     "Comedy"
   ],
   "duration": 101,
-  "rate": 11
+  "rate": 2
 }
 ### forzando error en POST para verificar validacion
 POST http://localhost:3210/movies
@@ -45,11 +45,13 @@ Content-Type: application/json; charset=utf-8
   "rate": 11
 }
 ### probamos a borrar una pelicula
-DELETE http://localhost:3210/movies/6665fec77f6b2dac60d506d6
+DELETE http://localhost:3210/movies/27936561-3b12-11ef-856a-0a0027000005
 ### actualizar una parte de una pelicula con PATCH
-PATCH http://localhost:3210/movies/66673d3c7939d0163ac8a550
+PATCH http://localhost:3210/movies/c4b81f76-3b14-11ef-856a-0a0027000005
 Content-Type: application/json; charset=utf-8
 
 {
+  "title": "SARA Y GUILLE EN CANARIAS",
+  "director": "Ataraxia&Codesthenos",
   "rate": 10
 }
