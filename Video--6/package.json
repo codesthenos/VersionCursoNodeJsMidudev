@@ -5,7 +5,8 @@
   "main": "index.js",
   "type": "module",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "server/index": "node --watch server/index.js"
   },
   "keywords": [
     "socket.io",
@@ -14,6 +15,7 @@
   "author": "Guillermo Ruiz Arranz - codesthenos",
   "license": "ISC",
   "dependencies": {
-    "express": "4.19.2"
+    "express": "4.19.2",
+    "morgan": "1.10.0"
   }
 }
