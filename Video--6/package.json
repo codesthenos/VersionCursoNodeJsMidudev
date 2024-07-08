@@ -3,6 +3,7 @@
   "version": "1.0.0",
   "description": "chat tiempo real websockets",
   "main": "index.js",
+  "type": "module",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
@@ -11,5 +12,8 @@
     "morgan"
   ],
   "author": "Guillermo Ruiz Arranz - codesthenos",
-  "license": "ISC"
+  "license": "ISC",
+  "dependencies": {
+    "express": "4.19.2"
+  }
 }
