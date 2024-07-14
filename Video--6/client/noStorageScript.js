@@ -24,6 +24,8 @@ socket.on('chat message', (message, serverOffset, username) => {
                 </li>`
   messages.insertAdjacentHTML('beforeend', item)
   socket.auth.serverOffset = serverOffset
+  // auto scroll (view last message in screen)
+  messages.scrollTop = messages.scrollHeight
 })
 
 form.addEventListener('submit', (e) => {
